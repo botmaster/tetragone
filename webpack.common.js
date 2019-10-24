@@ -1,7 +1,7 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -30,30 +30,12 @@ module.exports = {
                 }
             },
             {
-                test: /\.(sa|sc|c)ss$/,
-                use: [
-                    process.env.NODE_ENV !== "production"
-                        ? "style-loader"
-                        : {
-                              loader: MiniCssExtractPlugin.loader,
-                              options: {
-                                  hmr: process.env.NODE_ENV !== "production"
-                              }
-                          },
-
-                    "css-loader",
-                    "postcss-loader",
-                    "sass-loader"
-                ]
-            },
-            {
                 test: /\.(png|jpg|jpeg|gif|svg)$/,
                 use: [
                     {
                         loader: "file-loader",
                         options: {
-                            name: "[name].[ext]",
-                            outputPath: "assets/images/"
+                            name: "[name].[ext]"
                         }
                     }
                 ]
@@ -71,7 +53,13 @@ module.exports = {
                 removeComments: true,
                 collapseWhitespace: true
             }
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: "./static",
+                to: path.resolve(__dirname, "dist/static")
+            }
+        ])
     ],
     output: {
         filename: "[name].bundle.js",
