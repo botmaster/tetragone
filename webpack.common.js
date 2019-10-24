@@ -1,10 +1,11 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: {
-        app: "./src/main.js"
+        app: "./src/app/main.js"
     },
     module: {
         rules: [
@@ -27,6 +28,35 @@ module.exports = {
                         presets: ["@babel/preset-env"]
                     }
                 }
+            },
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    process.env.NODE_ENV !== "production"
+                        ? "style-loader"
+                        : {
+                              loader: MiniCssExtractPlugin.loader,
+                              options: {
+                                  hmr: process.env.NODE_ENV !== "production"
+                              }
+                          },
+
+                    "css-loader",
+                    "postcss-loader",
+                    "sass-loader"
+                ]
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif|svg)$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "[name].[ext]",
+                            outputPath: "assets/images/"
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -34,7 +64,13 @@ module.exports = {
         // new CleanWebpackPlugin(['dist/*']) for < v2 versions of CleanWebpackPlugin
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title: "Production"
+            title: "BeeBuzziness",
+            template: "./src/index.html",
+            inject: true,
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
         })
     ],
     output: {
