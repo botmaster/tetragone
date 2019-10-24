@@ -8,9 +8,9 @@ console.log(Logo);
 let body = document.querySelector("body");
 let image = new Image(200, 200);
 image.src = Logo;
-//body.appendChild(image);
+body.appendChild(image);
 
-let isDraging = false;
+let isDragging = false;
 let currentDiv = null;
 let mouse = {
     x: 0,
@@ -22,7 +22,7 @@ let id = 0;
 
 body.addEventListener("mousedown", e => {
     //console.log("mousedown", e);
-    isDraging = true;
+    isDragging = true;
     mouse = {
         x: e.x,
         y: e.y,
@@ -33,7 +33,7 @@ body.addEventListener("mousedown", e => {
 // eslint-disable-next-line no-unused-vars
 body.addEventListener("mouseup", e => {
     //console.log("mouseup", e);
-    isDraging = false;
+    isDragging = false;
     currentDiv = null;
     mouse = {
         x: 0,
@@ -45,7 +45,7 @@ body.addEventListener("mouseup", e => {
 // eslint-disable-next-line no-unused-vars
 body.addEventListener("mousemove", e => {
     //console.log(e);
-    if (isDraging) {
+    if (isDragging) {
         console.log("Je drag !!!");
         mouse.x = e.x;
         mouse.y = e.y;
@@ -53,8 +53,14 @@ body.addEventListener("mousemove", e => {
         if (!currentDiv) {
             console.log(e);
             const { x, y } = mouse;
-            const options = { x, y, id: id++ };
-            currentDiv = divFactory(options);
+            id++;
+            const styles = {
+                left: `${x}px`,
+                top: `${y}px`,
+                zIndex: id,
+                backgroundColor: getRandomColorHex()
+            };
+            currentDiv = divFactory(["shape"], id, styles);
             body.appendChild(currentDiv);
         }
         const { x, y, lastX, lastY } = mouse;
@@ -65,21 +71,19 @@ body.addEventListener("mousemove", e => {
 
 body.addEventListener("event_del", e => {
     console.log(e.detail);
-    document.getElementById(e.detail.id).remove();
+    document.getElementById(String(e.detail.id)).remove();
 });
 
-const divFactory = options => {
+function divFactory(classes = [], id = null, styles = {}) {
     let div = document.createElement("div");
-    div.classList.add("shape");
-    div.style.left = options.x ? options.x + "px" : 0;
-    div.style.top = options.y ? options.y + "px" : 0;
-    div.style.zIndex = options.id;
-    div.setAttribute("id", options.id);
+    div.classList.add(...classes);
+    Object.assign(div.style, styles);
+    if (id) {
+        div.setAttribute("id", id);
+    }
 
     let myEvent = new CustomEvent("event_del", {
-        detail: {
-            id: options.id
-        },
+        detail: { id },
         bubbles: true
     });
     div.addEventListener(
@@ -94,4 +98,13 @@ const divFactory = options => {
         e.stopPropagation();
     });
     return div;
-};
+}
+
+function getRandomColorHex() {
+    const colorLetters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+        color += colorLetters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
