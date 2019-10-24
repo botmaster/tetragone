@@ -30,8 +30,8 @@ body.addEventListener("mousedown", e => {
         lastY: e.y
     };
 });
-// eslint-disable-next-line no-unused-vars
-body.addEventListener("mouseup", e => {
+
+body.addEventListener("mouseup", () => {
     //console.log("mouseup", e);
     isDragging = false;
     currentDiv = null;
@@ -42,7 +42,7 @@ body.addEventListener("mouseup", e => {
         lastY: 0
     };
 });
-// eslint-disable-next-line no-unused-vars
+
 body.addEventListener("mousemove", e => {
     //console.log(e);
     if (isDragging) {
@@ -86,6 +86,7 @@ function divFactory(classes = [], id = null, styles = {}) {
         detail: { id },
         bubbles: true
     });
+
     div.addEventListener(
         "click",
         e => {
