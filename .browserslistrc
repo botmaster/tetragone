@@ -1,5 +1,5 @@
 # Browsers that we support
 
 last 1 version
-> 1%
-ie >=10 # sorry
+> 2%
+ie >=11 # sorry
