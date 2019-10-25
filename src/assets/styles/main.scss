@@ -17,4 +17,10 @@ body {
 .shape {
     position: absolute;
     background-color: red;
+    transition: transform 2s;
+
+    &--spin {
+        transform: rotate(360deg);
+    }
 }
+

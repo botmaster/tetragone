@@ -11,9 +11,6 @@ let image = new Image(200, 200);
 image.src = Logo;
 body.appendChild(image);
 
-let shape = new Shape(99);
-body.appendChild(shape.DOM.el);
-
 let isDragging = false;
 let currentDiv = null;
 let mouse = {
@@ -23,6 +20,7 @@ let mouse = {
     lastY: 0
 };
 let id = 0;
+let shapeList = [];
 
 body.addEventListener("mousedown", e => {
     //console.log("mousedown", e);
@@ -58,58 +56,21 @@ body.addEventListener("mousemove", e => {
             console.log(e);
             const { x, y } = mouse;
             id++;
-            const styles = {
-                left: `${x}px`,
-                top: `${y}px`,
-                zIndex: id,
-                backgroundColor: getRandomColorHex()
-            };
-            currentDiv = divFactory(["shape"], id, styles);
-            body.appendChild(currentDiv);
+            currentDiv = new Shape(id, 10, 10, x, y);
+            body.appendChild(currentDiv.DOM.el);
+            shapeList.push(currentDiv);
         }
         const { x, y, lastX, lastY } = mouse;
-        currentDiv.style.width = Math.max(x - lastX, 10) + "px";
-        currentDiv.style.height = Math.max(y - lastY, 10) + "px";
+        currentDiv.setSize(Math.max(x - lastX, 10), Math.max(y - lastY, 10));
     }
 });
 
 body.addEventListener("event_del", e => {
     console.log(e.detail);
-    document.getElementById(String(e.detail.id)).remove();
+    let shape = shapeList.find(item => item.id === e.detail.id);
+    document.getElementById(String(shape.id)).remove();
+    shape.cleanMe();
+    shapeList = shapeList.filter(item => item !== shape);
+    shape = null;
+    console.log(shapeList);
 });
-
-function divFactory(classes = [], id = null, styles = {}) {
-    let div = document.createElement("div");
-    div.classList.add(...classes);
-    Object.assign(div.style, styles);
-    if (id) {
-        div.setAttribute("id", id);
-    }
-
-    let myEvent = new CustomEvent("event_del", {
-        detail: { id },
-        bubbles: true
-    });
-
-    div.addEventListener(
-        "click",
-        e => {
-            e.stopPropagation();
-            div.dispatchEvent(myEvent);
-        },
-        { capture: true }
-    );
-    div.addEventListener("mousedown", e => {
-        e.stopPropagation();
-    });
-    return div;
-}
-
-function getRandomColorHex() {
-    const colorLetters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-        color += colorLetters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
