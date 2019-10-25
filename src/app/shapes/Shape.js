@@ -27,10 +27,10 @@ class Shape {
             backgroundColor: getRandomColorHex(),
             zIndex: id
         };
-
         this.DOM = {
             el: nodeFactory("div", ["shape"], this.id, this.defaultStyle)
         };
+        this.isSpining = false;
 
         this.initEvents();
     }
@@ -92,9 +92,11 @@ class Shape {
      * @returns {Promise<unknown>}
      */
     spinMe() {
+        this.isSpining = true;
         this.DOM.el.classList.add("shape--spin");
-        return new Promise(function(resolve) {
-            setTimeout(function() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                this.isSpining = false;
                 resolve();
             }, 2000);
         });
