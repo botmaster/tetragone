@@ -55,7 +55,7 @@ class Shape {
     dblclickHandler(e) {
         // console.log(e);
         e.stopPropagation();
-        let myEvent = new CustomEvent("event_del", {
+        let myEvent = new CustomEvent(Shape.EVENT_SHAPE_CLICK, {
             detail: { id: this.id },
             bubbles: true
         });
@@ -110,5 +110,7 @@ class Shape {
         );
     }
 }
+
+Shape.EVENT_SHAPE_CLICK = "event_shape_click";
 
 export default Shape;

@@ -1,5 +1,6 @@
 // Import styles
 import "../assets/styles/main.scss";
+import "./polyfills";
 
 // temp
 import Logo from "../assets/images/logo.png";
@@ -72,7 +73,7 @@ artBoard.addEventListener("mousemove", e => {
     }
 });
 
-artBoard.addEventListener("event_del", async e => {
+artBoard.addEventListener(Shape.EVENT_SHAPE_CLICK, async e => {
     console.log(e.detail);
     let shape = shapeList.find(item => item.id === e.detail.id);
     shapeTrash.push(shape);
@@ -94,7 +95,8 @@ function killShape(shape) {
     if (!shape) {
         return;
     }
-    document.getElementById(String(shape.id)).remove();
+    let el = document.getElementById(String(shape.id));
+    el.parentNode.removeChild(el);
     shape.cleanMe();
     shapeList = shapeList.filter(item => item !== shape);
     shape = null;
