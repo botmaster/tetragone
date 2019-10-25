@@ -39,16 +39,20 @@ class Shape {
      * Events initialisation
      */
     initEvents() {
-        this.DOM.el.addEventListener("click", this.clickHandler.bind(this), {
-            capture: true
-        });
+        this.DOM.el.addEventListener(
+            "dblclick",
+            this.dblclickHandler.bind(this),
+            {
+                capture: true
+            }
+        );
     }
 
     /**
-     * Click handler
+     * DoubleClick handler
      * @param e
      */
-    clickHandler(e) {
+    dblclickHandler(e) {
         // console.log(e);
         e.stopPropagation();
         this.spinMe().then(() => {
@@ -97,9 +101,13 @@ class Shape {
     }
 
     cleanMe() {
-        this.DOM.el.removeEventListener("click", this.clickHandler.bind(this), {
-            capture: true
-        });
+        this.DOM.el.removeEventListener(
+            "dblclick",
+            this.dblclickHandler.bind(this),
+            {
+                capture: true
+            }
+        );
     }
 }
 
