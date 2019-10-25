@@ -15,17 +15,19 @@ class Shape {
      */
     constructor(id, width = 10, height = 10, x = 0, y = 0) {
         this.id = id;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         this.defaultStyle = {
-            left: `${x}px`,
-            top: `${y}px`,
-            width: `${width}px`,
-            height: `${height}px`,
+            left: `${this.x}px`,
+            top: `${this.y}px`,
+            width: `${this.width}px`,
+            height: `${this.height}px`,
             backgroundColor: getRandomColorHex(),
             zIndex: id
         };
 
-        this.width = width;
-        this.height = height;
         this.DOM = {
             el: nodeFactory("div", ["shape"], this.id, this.defaultStyle)
         };
@@ -69,6 +71,16 @@ class Shape {
         this.height = h;
         this.DOM.el.style.width = `${this.width}px`;
         this.DOM.el.style.height = `${this.height}px`;
+    }
+
+    setPosX(x) {
+        this.x = x;
+        this.DOM.el.style.left = `${this.x}px`;
+    }
+
+    setPosY(y) {
+        this.y = y;
+        this.DOM.el.style.top = `${this.y}px`;
     }
 
     /**

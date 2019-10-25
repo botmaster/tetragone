@@ -6,71 +6,88 @@ import Logo from "../assets/images/logo.png";
 console.log(Logo);
 import Shape from "./shapes/Shape";
 
-let body = document.querySelector("body");
-let image = new Image(200, 200);
-image.src = Logo;
-body.appendChild(image);
-
+let artBoard = document.querySelector("#artBoard");
 let isDragging = false;
-let currentDiv = null;
+let currentShape = null;
 let mouse = {
     x: 0,
     y: 0,
-    lastX: 0,
-    lastY: 0
+    startX: 0,
+    startY: 0
 };
 let id = 0;
 let shapeList = [];
 
-body.addEventListener("mousedown", e => {
+artBoard.addEventListener("mousedown", e => {
     //console.log("mousedown", e);
     isDragging = true;
     mouse = {
         x: e.x,
         y: e.y,
-        lastX: e.x,
-        lastY: e.y
+        startX: e.x,
+        startY: e.y
     };
 });
 
-body.addEventListener("mouseup", () => {
+artBoard.addEventListener("mouseup", () => {
     //console.log("mouseup", e);
+    if (
+        currentShape &&
+        (currentShape.width <= 10 || currentShape.height <= 10)
+    ) {
+        killShape(currentShape);
+    }
     isDragging = false;
-    currentDiv = null;
+    currentShape = null;
     mouse = {
         x: 0,
         y: 0,
-        lastX: 0,
-        lastY: 0
+        startX: 0,
+        startY: 0
     };
 });
 
-body.addEventListener("mousemove", e => {
-    //console.log(e);
+artBoard.addEventListener("mousemove", e => {
     if (isDragging) {
-        console.log("Je drag !!!");
+        console.log("Dragging!!!");
         mouse.x = e.x;
         mouse.y = e.y;
 
-        if (!currentDiv) {
-            console.log(e);
+        if (!currentShape) {
             const { x, y } = mouse;
             id++;
-            currentDiv = new Shape(id, 10, 10, x, y);
-            body.appendChild(currentDiv.DOM.el);
-            shapeList.push(currentDiv);
+            currentShape = new Shape(id, 10, 10, x, y);
+            artBoard.appendChild(currentShape.DOM.el);
+            shapeList.push(currentShape);
         }
-        const { x, y, lastX, lastY } = mouse;
-        currentDiv.setSize(Math.max(x - lastX, 10), Math.max(y - lastY, 10));
+        const { x, y, startX, startY } = mouse;
+        currentShape.setSize(Math.abs(x - startX), Math.abs(y - startY));
+        if (e.x < mouse.startX) {
+            currentShape.setPosX(e.x);
+        }
+        if (e.y < mouse.startY) {
+            currentShape.setPosY(e.y);
+        }
     }
 });
 
-body.addEventListener("event_del", e => {
+artBoard.addEventListener("event_del", e => {
     console.log(e.detail);
     let shape = shapeList.find(item => item.id === e.detail.id);
+    shape && killShape(shape);
+    console.log(shapeList);
+});
+
+/**
+ * Delete shape object and remove dom element
+ * @param shape
+ */
+function killShape(shape) {
+    if (!shape) {
+        return;
+    }
     document.getElementById(String(shape.id)).remove();
     shape.cleanMe();
     shapeList = shapeList.filter(item => item !== shape);
     shape = null;
-    console.log(shapeList);
-});
+}

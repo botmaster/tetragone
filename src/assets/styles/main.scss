@@ -1,19 +1,13 @@
 @import "~normalize.css";
 
-body {
-    background-color: #f7f6ff;
+// Artboard
+#artBoard {
+    background-color: #d0ffdc;
     min-height: 100vh;
     position: relative;
-
-    .example {
-        display: grid;
-        transition: all .5s;
-        user-select: none;
-        background: linear-gradient(to bottom, white, black);
-    }
-
 }
 
+// Shape
 .shape {
     position: absolute;
     background-color: red;
