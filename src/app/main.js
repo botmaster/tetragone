@@ -4,11 +4,15 @@ import "../assets/styles/main.scss";
 // temp
 import Logo from "../assets/images/logo.png";
 console.log(Logo);
+import Shape from "./shapes/Shape";
 
 let body = document.querySelector("body");
 let image = new Image(200, 200);
 image.src = Logo;
 body.appendChild(image);
+
+let shape = new Shape(99);
+body.appendChild(shape.DOM.el);
 
 let isDragging = false;
 let currentDiv = null;
