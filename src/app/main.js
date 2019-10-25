@@ -17,6 +17,7 @@ let mouse = {
 };
 let id = 0;
 let shapeList = [];
+let shapeTrash = [];
 
 artBoard.addEventListener("mousedown", e => {
     //console.log("mousedown", e);
@@ -71,11 +72,18 @@ artBoard.addEventListener("mousemove", e => {
     }
 });
 
-artBoard.addEventListener("event_del", e => {
+artBoard.addEventListener("event_del", async e => {
     console.log(e.detail);
     let shape = shapeList.find(item => item.id === e.detail.id);
-    shape && killShape(shape);
-    console.log(shapeList);
+    shapeTrash.push(shape);
+    await shape.spinMe();
+    if (shapeTrash.lastIndexOf(shape) === shapeTrash.length - 1) {
+        shapeTrash.forEach(item => {
+            item && killShape(item);
+            console.log(shapeList);
+            shapeTrash = [];
+        });
+    }
 });
 
 /**

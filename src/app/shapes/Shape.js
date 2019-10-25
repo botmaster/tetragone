@@ -55,14 +55,12 @@ class Shape {
     dblclickHandler(e) {
         // console.log(e);
         e.stopPropagation();
-        this.spinMe().then(() => {
-            let myEvent = new CustomEvent("event_del", {
-                detail: { id: this.id },
-                bubbles: true
-            });
-
-            this.DOM.el.dispatchEvent(myEvent);
+        let myEvent = new CustomEvent("event_del", {
+            detail: { id: this.id },
+            bubbles: true
         });
+
+        this.DOM.el.dispatchEvent(myEvent);
     }
 
     /**
