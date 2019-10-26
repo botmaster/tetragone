@@ -43,7 +43,7 @@ module.exports = {
         // new CleanWebpackPlugin(['dist/*']) for < v2 versions of CleanWebpackPlugin
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title: "BeeBuzziness",
+            title: process.env.npm_package_name,
             template: "./src/index.html",
             inject: true,
             minify: {
