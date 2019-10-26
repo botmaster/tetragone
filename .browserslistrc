@@ -1,5 +1,7 @@
 # Browsers that we support
 
-last 1 version
-> 2%
-ie >=11 # sorry
+last 2 version and not ie <=10 # sorry
+> 1% in FR
+Firefox ESR
+not dead
+

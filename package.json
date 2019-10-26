@@ -1,7 +1,7 @@
 {
-    "name": "beebuzztest",
+    "name": "tetragone",
     "version": "1.0.0",
-    "description": "Test js BeeBuzziness",
+    "description": "Test technique pour bee",
     "main": "src/main.js",
     "author": "Pascal Achard",
     "license": "MIT",
@@ -12,9 +12,7 @@
         "lint": "eslint --ext .js --ignore-path .gitignore ."
     },
     "dependencies": {
-        "core-js": "3.3.4",
-        "webpack": "^4.41.2",
-        "webpack-cli": "^3.3.9"
+        "core-js": "3.3.4"
     },
     "devDependencies": {
         "@babel/core": "^7.6.4",
@@ -41,7 +39,9 @@
         "prettier": "^1.18.2",
         "sass-loader": "^8.0.0",
         "style-loader": "^1.0.0",
+        "webpack": "^4.41.2",
         "webpack-bundle-analyzer": "^3.6.0",
+        "webpack-cli": "^3.3.9",
         "webpack-dev-server": "^3.9.0",
         "webpack-merge": "^4.2.2"
     }

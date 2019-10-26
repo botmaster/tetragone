@@ -1,10 +1,19 @@
+// Normalize styles
 @import "~normalize.css";
+
+body {
+    user-select: none;
+}
 
 // Artboard
 #artBoard {
     background-color: #d0ffdc;
     min-height: 100vh;
     position: relative;
+
+    &, * {
+        user-select: none;
+    }
 }
 
 // Shape
@@ -13,8 +22,22 @@
     background-color: red;
     transition: transform 2s;
 
+    &:hover {
+        cursor: pointer;
+    }
+
     &--spin {
         transform: rotate(360deg);
+    }
+}
+
+// Cursors
+.cursor {
+    cursor: default;
+    &--resize {
+        &, * {
+            cursor: crosshair;
+        }
     }
 }
 

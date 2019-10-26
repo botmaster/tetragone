@@ -47,14 +47,20 @@ artBoard.addEventListener("mouseup", () => {
         startX: 0,
         startY: 0
     };
+
+    // Change pointer
+    artBoard.classList.remove("cursor--resize");
 });
 
 artBoard.addEventListener("mousemove", e => {
     if (isDragging) {
         console.log("Dragging!!!");
+
+        // Save mouse position
         mouse.x = e.x;
         mouse.y = e.y;
 
+        // Create shape if needed
         if (!currentShape) {
             const { x, y } = mouse;
             id++;
@@ -62,6 +68,11 @@ artBoard.addEventListener("mousemove", e => {
             artBoard.appendChild(currentShape.DOM.el);
             shapeList.push(currentShape);
         }
+
+        // Change pointer
+        artBoard.classList.add("cursor--resize");
+
+        // Size the shape.
         const { x, y, startX, startY } = mouse;
         currentShape.setSize(Math.abs(x - startX), Math.abs(y - startY));
         if (e.x < mouse.startX) {
