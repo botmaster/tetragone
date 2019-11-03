@@ -1,7 +1,7 @@
 # Test Technique
 [![Netlify Status](https://api.netlify.com/api/v1/badges/56c421e9-6c2b-40f9-acab-1db7fca73211/deploy-status)](https://app.netlify.com/sites/tetragone/deploys)
 
-En gros, faut dessiner à la souris des quadrilatères qui tournent quand tu cliques dessus.
+En gros, on me demande de dessiner à la souris des quadrilatères qui tournent quand tu cliques dessus.
 
 ## Demo
 [tetragone](https://tetragone.netlify.com/)

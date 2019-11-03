@@ -1,3 +1,6 @@
+/**
+ * Window.CustomEvent polyfills
+ */
 (function() {
     if (typeof window.CustomEvent === "function") return false;
 

@@ -1,3 +1,11 @@
+/**
+ * Return an HTML node
+ * @param tag
+ * @param classes
+ * @param id
+ * @param styles
+ * @returns {HTMLDivElement}
+ */
 export function nodeFactory(tag = "div", classes = [], id = null, styles = {}) {
     let node = document.createElement(tag);
     node.classList.add(...classes);
@@ -9,6 +17,10 @@ export function nodeFactory(tag = "div", classes = [], id = null, styles = {}) {
     return node;
 }
 
+/**
+ * Return a random color. Hex format.
+ * @returns {string}
+ */
 export function getRandomColorHex() {
     const colorLetters = "0123456789ABCDEF";
     let color = "#";

@@ -1,13 +1,16 @@
-// Import styles
+// Styles
 import "../assets/styles/main.scss";
+
+// Polyfills
 import "./polyfills";
 
-// temp
-import Logo from "../assets/images/logo.png";
-console.log(Logo);
+// Classes
 import Shape from "./shapes/Shape";
 
+// Dom elements
 let artBoard = document.querySelector("#artBoard");
+
+// Some variables
 let isDragging = false;
 let currentShape = null;
 let mouse = {
@@ -20,6 +23,7 @@ let id = 0;
 let shapeList = [];
 let shapeTrash = [];
 
+// Listen mousedown event
 artBoard.addEventListener("mousedown", e => {
     //console.log("mousedown", e);
     isDragging = true;
@@ -31,6 +35,7 @@ artBoard.addEventListener("mousedown", e => {
     };
 });
 
+// Listen mouseup event
 artBoard.addEventListener("mouseup", () => {
     //console.log("mouseup", e);
     if (
@@ -52,9 +57,10 @@ artBoard.addEventListener("mouseup", () => {
     artBoard.classList.remove("cursor--resize");
 });
 
+// Listen mousemove event
 artBoard.addEventListener("mousemove", e => {
     if (isDragging) {
-        console.log("Dragging!!!");
+        // console.log("Dragging!!!");
 
         // Save mouse position
         mouse.x = e.x;
@@ -84,15 +90,24 @@ artBoard.addEventListener("mousemove", e => {
     }
 });
 
+// Listen Shape object events
 artBoard.addEventListener(Shape.EVENT_SHAPE_CLICK, async e => {
-    console.log(e.detail);
+    // console.log(e.detail);
+
+    // Get the shape
     let shape = shapeList.find(item => item.id === e.detail.id);
+
+    // Push it in the trash stack
     shapeTrash.push(shape);
+
+    // Let's spin the shape!
     await shape.spinMe();
+
+    // And if the last clicked one was the last in the trash, we kill the shapes and empty trash.
     if (shapeTrash.lastIndexOf(shape) === shapeTrash.length - 1) {
         shapeTrash.forEach(item => {
             item && killShape(item);
-            console.log(shapeList);
+            // console.log(shapeList);
             shapeTrash = [];
         });
     }

@@ -75,11 +75,19 @@ class Shape {
         this.DOM.el.style.height = `${this.height}px`;
     }
 
+    /**
+     * Set the x position
+     * @param x
+     */
     setPosX(x) {
         this.x = x;
         this.DOM.el.style.left = `${this.x}px`;
     }
 
+    /**
+     * Set the y position
+     * @param y
+     */
     setPosY(y) {
         this.y = y;
         this.DOM.el.style.top = `${this.y}px`;
@@ -100,6 +108,9 @@ class Shape {
         });
     }
 
+    /**
+     * Clean the instance for GC
+     */
     cleanMe() {
         this.DOM.el.removeEventListener(
             "dblclick",
@@ -111,6 +122,10 @@ class Shape {
     }
 }
 
+/**
+ * Static event names
+ * @type {string}
+ */
 Shape.EVENT_SHAPE_CLICK = "event_shape_click";
 
 export default Shape;

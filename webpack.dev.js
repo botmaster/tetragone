@@ -12,7 +12,7 @@ const config = merge(common, {
             warnings: true,
             errors: true
         },
-        stats: "errors-only",
+        // stats: "errors-only",
         open: false
     },
     module: {
@@ -30,6 +30,6 @@ const config = merge(common, {
     }
 });
 
-console.log(config);
+// console.log(config);
 
 module.exports = config;
